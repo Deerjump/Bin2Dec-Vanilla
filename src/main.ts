@@ -2,6 +2,7 @@ import './style.css';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
+      <span id='errorMessage' hidden=true></span><br/>
       <label id="inputLabel" htmlFor="input">
         Binary:
       </label>
@@ -9,7 +10,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         id="input"
         type="text"
         placeholder='0'
-        maxLength=8
       ></input>
       <br/>
       <label htmlFor='result'>Result:</label>
@@ -19,23 +19,36 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
 const regex = /^[01]*$/;
 
-document.querySelector<HTMLInputElement>('#input')?.addEventListener('beforeinput', (event) => {
+function displayError(error: string) {
+  const errorSpan = document.querySelector<HTMLElement>('#errorMessage')!;
+  errorSpan.hidden = false;
+  errorSpan.textContent = error;
+}
+
+function removeError() {
+  const errorSpan = document.querySelector<HTMLElement>('#errorMessage')!;
+  errorSpan.hidden = true;
+  errorSpan.textContent = '';
+}
+
+document
+  .querySelector<HTMLInputElement>('#input')
+  ?.addEventListener('beforeinput', (event) => {
     const data = event.data;
     console.log(data);
-    const currentTarget = event.currentTarget as HTMLInputElement;
-    if (
-      data != null &&
-      (!regex.test(data) ||
-        currentTarget.value.length === currentTarget.maxLength)
-    ) {
+    if (data != null && !regex.test(data)) {
       event.preventDefault();
+      displayError(`You must only enter a 1 or a 0! You entered: "${data}"`);
       return;
     }
+    removeError();
   });
 
-document.querySelector<HTMLInputElement>('#input')?.addEventListener('input', (event) => {
+document
+  .querySelector<HTMLInputElement>('#input')
+  ?.addEventListener('input', (event) => {
     const element = event.currentTarget as HTMLInputElement;
     document.querySelector<HTMLElement>('#result')!.innerHTML = `${Number(
-      `0b${element.value ?? 0}`
+      `0b${element.value !== '' ? element.value : 0}`
     )}`;
   });
