@@ -2,18 +2,17 @@ import './style.css';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
-      <span id='errorMessage' hidden=true></span><br/>
+      <span id='errorMessage' hidden></span><br/>
       <label id="inputLabel" htmlFor="input">
         Binary:
       </label>
       <input
         id="input"
         type="text"
-        placeholder='0'
       ></input>
       <br/>
       <label htmlFor='result'>Result:</label>
-      <span id='result'>0</span>
+      <span id='result'></span>
   </div>
 `;
 
@@ -48,7 +47,6 @@ document
   .querySelector<HTMLInputElement>('#input')
   ?.addEventListener('input', (event) => {
     const element = event.currentTarget as HTMLInputElement;
-    document.querySelector<HTMLElement>('#result')!.innerHTML = `${Number(
-      `0b${element.value !== '' ? element.value : 0}`
-    )}`;
+    document.querySelector<HTMLElement>('#result')!.innerHTML =
+      (element.value === '' || element.value === undefined) ? '' : `${Number(`0b${element.value}`)}`;
   });
