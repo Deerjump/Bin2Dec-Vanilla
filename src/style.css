@@ -1,9 +1,9 @@
 :root {
+  box-sizing: border-box;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -14,7 +14,7 @@
 }
 
 body {
-  margin: 0;
+  margin: auto;
   display: flex;
   place-items: center;
   min-width: 320px;
@@ -22,12 +22,27 @@ body {
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
+  height: 100px;
+  width: 350px;
+  margin: auto;
   padding: 2rem;
   text-align: center;
+  border: gray solid 5px;
+  border-radius: 10px;
+}
+
+#result {
+  background-color: inherit;
+  color: white;
+  border: white solid 1px;
+  border-style: inset;
+}
+
+.error {
+  visibility: hidden;
 }
 
 #errorMessage {
-  color: red
+  color: red;
+  font-size: 0.9em;
 }

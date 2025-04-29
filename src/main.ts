@@ -1,32 +1,36 @@
 import './style.css';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-      <span id='errorMessage' hidden></span><br/>
-      <label id="inputLabel" htmlFor="input">
-        Binary:
-      </label>
-      <input
-        id="input"
-        type="text"
-      ></input>
-      <br/>
-      <label htmlFor='result'>Result:</label>
-      <span id='result'></span>
-  </div>
+      <div class='error'>
+        <span id='errorMessage'></span>
+      </div>
+      <div class='input'>
+        <label id="inputLabel" htmlFor="input">
+          Binary:
+        </label>
+        <input
+          id="input"
+          type="text"
+        ></input>
+      </div>
+      <div class='result'>
+        Result: <input id='result' disabled></span>
+      </div>
 `;
 
 const regex = /^[01]*$/;
 
 function displayError(error: string) {
+  const errorContainer = document.querySelector<HTMLElement>('.error')!;
   const errorSpan = document.querySelector<HTMLElement>('#errorMessage')!;
-  errorSpan.hidden = false;
+  errorContainer.style.visibility = 'visible';
   errorSpan.textContent = error;
 }
 
 function removeError() {
+  const errorContainer = document.querySelector<HTMLElement>('.error')!;
   const errorSpan = document.querySelector<HTMLElement>('#errorMessage')!;
-  errorSpan.hidden = true;
+  errorContainer.style.visibility = 'hidden';
   errorSpan.textContent = '';
 }
 
@@ -47,6 +51,6 @@ document
   .querySelector<HTMLInputElement>('#input')
   ?.addEventListener('input', (event) => {
     const element = event.currentTarget as HTMLInputElement;
-    document.querySelector<HTMLElement>('#result')!.innerHTML =
+    document.querySelector<HTMLInputElement>('#result')!.value =
       (element.value === '' || element.value === undefined) ? '' : `${Number(`0b${element.value}`)}`;
   });
